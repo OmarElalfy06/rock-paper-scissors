@@ -117,7 +117,7 @@ font-size: 24px;
 }
 
 
-/* Tablets */
+
 @media (max-width: 768px) {
 
     .p1 {
@@ -158,50 +158,57 @@ font-size: 24px;
     }
 }
 
-/* Phones */
+
+
 @media (max-width: 480px) {
 
     body {
-        padding: 15px;
+        padding: 20px 10px;
+        text-align: center;
     }
 
     .p1 {
-        font-size: 28px;
+        font-size: 34px;
+        margin-bottom: 30px;
     }
 
+    /* Keep the buttons on one line */
     .cssbutton {
         padding: 18px;
-        margin-right: 5px;
-        margin-bottom: 20px;
+        margin: 0 4px 25px;
     }
 
     .img {
-        width: 35px;
-        height: 35px;
-    }
-
-    .line1 {
-        font-size: 30px;
-    }
-
-    .line2 {
-        font-size: 18px;
-        gap: 8px;
-        flex-wrap: wrap;
-    }
-
-    .imgjs {
         width: 40px;
         height: 40px;
     }
 
+    .line1 {
+        font-size: 28px;
+        margin-bottom: 25px;
+    }
+
+    .line2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: nowrap; /* Don't wrap */
+        font-size: 16px;
+    }
+
+    .imgjs {
+        width: 45px;
+        height: 45px;
+    }
+
     .scorecss {
         font-size: 18px;
+        margin: 30px 0;
     }
 
     .recss {
-        width: 100%;
-        max-width: 220px;
         font-size: 16px;
+        padding: 10px 18px;
     }
 }
