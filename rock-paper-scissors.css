@@ -2,8 +2,6 @@ body{
     background-color: rgb(25, 25, 25);
     color: white;
     font-family: arial;
-    margin-left: 640px;
-    margin-top: 170px;
     
     
 }
@@ -211,4 +209,11 @@ font-size: 24px;
         font-size: 16px;
         padding: 10px 18px;
     }
+
+    .p1,
+.line1,
+.recss,
+.bottompage {
+    margin-left: 0;
+}
 }
