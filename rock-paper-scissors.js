@@ -1,106 +1,140 @@
 
-function computerMove(){
-  let computerMove = Math.random();
-  if(computerMove<=1/3&&computerMove>=0)
-    computerMove = 'Rock';
-  else if(computerMove>1/3&&computerMove<=2/3)
-    computerMove='Paper';
-  else if(computerMove>2/3&&computerMove<=1)
-    computerMove='Scissors';
+function computerMove() {
 
+    const random = Math.random();
 
-  return computerMove;
+    if (random < 1 / 3) {
+        return 'Rock';
+    } else if (random < 2 / 3) {
+        return 'Paper';
+    } else {
+        return 'Scissors';
+    }
+
+}
+
+let Score = JSON.parse(localStorage.getItem('Score')) || {
+    wins: 0,
+    tie: 0,
+    lose: 0
 };
 
+updateScore();
 
+function playGame(playerMove) {
 
-function playGame(parameter) {
-  let computerMoves = computerMove();
-  let result = '';
+    const computerMoves = computerMove();
 
-  if (parameter === 'Rock') {
-    if (computerMoves === 'Rock') {
-      result = 'Tie';
-      Score.tie++;
-    } else if (computerMoves === 'Paper') {
-      result = 'Lose';
-      Score.lose++;
-    } else if (computerMoves === 'Scissors') {
-      result = 'Win';
-      Score.wins++;
+    let result = '';
+
+    if (playerMove === 'Rock') {
+
+        if (computerMoves === 'Rock') {
+            result = 'Tie';
+            Score.tie++;
+        } else if (computerMoves === 'Paper') {
+            result = 'Lose';
+            Score.lose++;
+        } else {
+            result = 'Win';
+            Score.wins++;
+        }
+
+    } else if (playerMove === 'Paper') {
+
+        if (computerMoves === 'Rock') {
+            result = 'Win';
+            Score.wins++;
+        } else if (computerMoves === 'Paper') {
+            result = 'Tie';
+            Score.tie++;
+        } else {
+            result = 'Lose';
+            Score.lose++;
+        }
+
+    } else {
+
+        if (computerMoves === 'Rock') {
+            result = 'Lose';
+            Score.lose++;
+        } else if (computerMoves === 'Paper') {
+            result = 'Win';
+            Score.wins++;
+        } else {
+            result = 'Tie';
+            Score.tie++;
+        }
+
     }
-  }
 
-  else if (parameter === 'Paper') {
-    if (computerMoves === 'Rock') {
-      result = 'Win';
-      Score.wins++;
-    } else if (computerMoves === 'Paper') {
-      result = 'Tie';
-      Score.tie++;
-    } else if (computerMoves === 'Scissors') {
-      result = 'Lose';
-      Score.lose++;
-    }
-  }
+    localStorage.setItem('Score', JSON.stringify(Score));
 
-  else if (parameter === 'Scissors') {
-    if (computerMoves === 'Rock') {
-      result = 'Lose';
-      Score.lose++;
-    } else if (computerMoves === 'Paper') {
-      result = 'Win';
-      Score.wins++;
-    } else if (computerMoves === 'Scissors') {
-      result = 'Tie';
-      Score.tie++;
-    }
-  }
+    updateScore();
 
-  localStorage.setItem('Score', JSON.stringify(Score));
-document.querySelector(".score").innerHTML=`Wins:${Score.wins},Ties:${Score.tie},Losses:${Score.lose}`
-  
-divs(result,parameter,computerMoves);
+    document.querySelector('.jsp').innerHTML = `
+        <div class="line1">You ${result}</div>
 
+        <div class="line2">
+            <span>You</span>
 
+            <img src="${playerMove}-emoji.png" class="imgjs">
 
-  return result;
+            <img src="${computerMoves}-emoji.png" class="imgjs">
+
+            <span>Computer</span>
+        </div>
+    `;
 }
 
+function updateScore() {
 
+    document.querySelector('.score').innerHTML =
+        `Wins:${Score.wins}, Ties:${Score.tie}, Losses:${Score.lose}`;
 
-let Score = JSON.parse(localStorage.getItem('Score'))||{
-  wins : 0,
-  tie : 0,
-  lose : 0,
-};
-
-let Store=JSON.stringify(Score);
-localStorage.setItem('Score',Store);
-
-function resetScore(){
-  Score.wins = 0;
-  Score.tie = 0;
-  Score.lose = 0;
-document.querySelector(".score").innerHTML=`Wins:${Score.wins},Ties:${Score.tie},Losses:${Score.lose}`
-  localStorage.setItem('Score', JSON.stringify(Score));
 }
 
+function resetScore() {
 
-document.querySelector(".score").innerHTML=`Wins:${Score.wins},Ties:${Score.tie},Losses:${Score.lose}`;
+    Score = {
+        wins: 0,
+        tie: 0,
+        lose: 0
+    };
 
+    localStorage.setItem('Score', JSON.stringify(Score));
 
-function divs(result, parameter, computerMoves) {
-  document.querySelector('.jsp').innerHTML = `
-    <div class="line1">You ${result}</div>
-    <div class="line2">
-      You <img src="${parameter}-emoji.png" class="imgjs">
-      <img src="${computerMoves}-emoji.png" class="imgjs">
-      Computer
-    </div>
-  `;
+    updateScore();
+
+    document.querySelector('.jsp').innerHTML = '';
+
 }
 
+let isAutoPlaying = false;
+let intervalId;
+
+function autoPlay() {
+
+  if (!isAutoPlaying) {
+
+    intervalId = setInterval(function () {
+      const playerMove = computerMove();
+      playGame(playerMove);
+    }, 1000);
+
+    isAutoPlaying = true;
+    document.querySelector('.autojs').innerHTML = 'Stop';
+
+  } else {
+
+    clearInterval(intervalId);
+
+    isAutoPlaying = false;
+    document.querySelector('.autojs').innerHTML = 'Auto Play';
+
+  }
+
+}
 
 
 
