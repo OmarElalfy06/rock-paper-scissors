@@ -138,4 +138,29 @@ function autoPlay() {
 
 
 
+document.querySelector('.rejs').addEventListener('click', () => {
+  document.querySelector('.confirmationjs').innerHTML = `
+  
+    <p>Are you sure?</p>
+    <button class="yesjs recss">Yes</button>
+    <button class="nojs recss">No</button>
+  `;
+
+  document.querySelector('.yesjs').addEventListener('click', () => {
+    resetScore();
+     document.querySelector('.confirmationjs').innerHTML = '';
+     setTimeout(()=>{
+        document.querySelector('.msg').innerHTML=`<P class="reseted">Score Reseted Successfully!</P>`;
+     },100);
+     setTimeout(()=>{
+        document.querySelector('.msg').innerHTML=``;
+     },1850)
+  });
+
+  document.querySelector('.nojs').addEventListener('click', () => {
+    document.querySelector('.confirmationjs').innerHTML = '';
+  });
+});
+
+
 
